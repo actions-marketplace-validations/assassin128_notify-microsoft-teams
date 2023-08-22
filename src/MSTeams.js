@@ -20,7 +20,8 @@ const {
 	},
 	eventName,
 	workflow,
-	sha
+	sha,
+	run_id
 } = github;
 
 const statuses = [
@@ -81,7 +82,8 @@ function Status(status) {
 	return r
 }
 
-const workflow_link = `[${workflow}](${repository.html_url}/actions?query=workflow%3A${workflow}})`;
+const workflow_url = `${repository.html_url}/actions/runs/${run_id}`;
+const workflow_link = `[${workflow}](${workflow_url})`;
 const payload_link = `[${eventName}](${compare})`;
 const sender_link = `[${sender.login}](${sender.url})`;
 const repository_link = `[${repository.full_name}](${repository.html_url})`;
@@ -164,7 +166,7 @@ class MSTeams {
 					"@type": "OpenUri",
 					name: "Repository",
 					targets: [
-						{ os: "default", uri: repository.html_url }
+						{ os: "default", uri: workflow_url }
 					]
 				},
 				{
